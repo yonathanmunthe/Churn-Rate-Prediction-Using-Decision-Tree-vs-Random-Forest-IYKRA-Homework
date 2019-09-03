@@ -10,3 +10,5 @@ Langkah-langkah proses yang dilakukan adalah sebagai berikut :
 6. Membuat Confusion Matrix Data Prediksi vs Data Aktual dan menghitung Parameter Confusion Matrix
 7. Membandingkan Parameter Confusion Matrix model Decision Tree vs model Random Forest
 * extra : membuat model Random Forest dengan 500 tree (model Random Forest pertama hanya menggunakan 100 tree)
+* extra : mencoba membuat model Random Forest dengan mtry yang berbeda-beda dengan fungsi For Loop (mtry 3 s.d. 9)
+* Mtry: Number of variables randomly sampled as candidates at each split. Note that the default values are different for classification (sqrt(p) where p is number of variables in x) and regression (p/3) 
