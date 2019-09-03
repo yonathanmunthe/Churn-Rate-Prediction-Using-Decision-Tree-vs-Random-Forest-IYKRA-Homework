@@ -9,4 +9,4 @@ Langkah-langkah proses yang dilakukan adalah sebagai berikut :
 5. Data Prediksi disandingkan dengan Data Aktual (label) Testing Data
 6. Membuat Confusion Matrix Data Prediksi vs Data Aktual dan menghitung Parameter Confusion Matrix
 7. Membandingkan Parameter Confusion Matrix model Decision Tree vs model Random Forest
-*extra : membuat model Random Forest dengan 500 tree (model Random Forest pertama hanya menggunakan 100 tree)
+* extra : membuat model Random Forest dengan 500 tree (model Random Forest pertama hanya menggunakan 100 tree)
