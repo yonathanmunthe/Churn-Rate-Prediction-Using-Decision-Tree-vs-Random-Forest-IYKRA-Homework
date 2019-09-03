@@ -11,7 +11,9 @@ tail(df_employee)
 df_employee$left <- as.factor(df_employee$left)
 urutan <- sample(1:nrow(df_employee),as.integer(0.7*nrow(df_employee)))
 trainDataLog <- df_employee[urutan,]
+summary(trainDataLog)
 testDataLog <- df_employee[-urutan,]
+summary(testDataLog)
 
 # Decision Tree
 # Decision Tree Training
@@ -46,6 +48,7 @@ TN1
 # Menghitung akurasi 
 acc1 <- (TP1+TN1)/(TP1+FN1+FP1+TN1)
 acc1
+mean(pred1 == testDataLog$left)
 
 # Menghitung presisi
 prec1 <- TP1 / (TP1+FP1)
@@ -95,6 +98,7 @@ TN2
 # Menghitung akurasi 
 acc2 <- (TP2+TN2)/(TP2+FN2+FP2+TN2)
 acc2
+mean(pred2 == testDataLog$left)
 
 # Menghitung presisi
 prec2 <- TP2 / (TP2+FP2)
@@ -126,7 +130,7 @@ randomFor2
 summary(randomFor2)
 
 # Random Forest Prediction
-pred22 <- predict(randomFor, data.frame(testDataLog),type="class")
+pred22 <- predict(randomFor2, data.frame(testDataLog),type="class")
 pred22
 
 dfpred22 <- data.frame(prediksi=pred22)
@@ -151,6 +155,7 @@ TN22
 # Menghitung akurasi 
 acc22 <- (TP22+TN22)/(TP22+FN22+FP22+TN22)
 acc22
+mean(pred22 == testDataLog$left)
 
 # Menghitung presisi
 prec22 <- TP22 / (TP22+FP22)
@@ -175,3 +180,32 @@ paramAll2 <- left_join(paramAll, paramForest2, by="Parameter")
 paramAll2
 
 # Dari paramAll2, dapat ditarik kesimpulan metodologi Random Forest dengan 500 tree memberikan prediksi yang sama dengan Random Forest dengan 100 tree
+
+# Using For loop to identify the right mtry for model
+a=c()
+for (i in 3:9) {
+  randomFori <- randomForest(left ~ ., data = data.frame(trainDataLog), ntree = 500, mtry = i, importance = TRUE)
+  predi <- predict(randomFori, data.frame(testDataLog), type = "class")
+  print(mean(predi == data.frame(testDataLog)$left))
+  a[i-2] = mean(predi == data.frame(testDataLog)$left)
+}
+a
+dfmtry <- data.frame(mtry = c(3:9), akurasi = a)
+dfmtry
+
+# Dari dfmtry, dapat ditarik kesimpulan :
+## Akurasi paling tinggi adalah dengan mtry = 4
+## Akurasi menurun saat mtry dinaikkan lebih dari 4
+## Walaupun Akurasi berubah-ubah, tetapi rata-rata sekitar 99% jadi model sudah baik dengan mtry berapa pun
+## Waktu running dengan ntree yang lebih banyak akan membutuhkan waktu yang lebih banyak
+## waktu running dengan looping membutuhkan waktu yang lebih banyak
+## Waktu running dengan fungsi membanding (==) satu per satu file membutuhkan waktu yang lebih banyak
+
+# Tes hitung akurasi mtry = 3 dan mtry = 4 manual
+randomFor3 <- randomForest(left ~ ., data = data.frame(trainDataLog), ntree = 500, importance = TRUE)
+pred3 <- predict(randomFor3, data.frame(testDataLog), type = "class")
+mean(pred3 == data.frame(testDataLog)$left)
+
+randomFor4 <- randomForest(left ~ ., data = data.frame(trainDataLog), ntree = 500, mtry = 4, importance = TRUE)
+pred4 <- predict(randomFor4, data.frame(testDataLog), type = "class")
+mean(pred4 == data.frame(testDataLog)$left)
