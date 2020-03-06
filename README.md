@@ -1,4 +1,4 @@
-# Churn-Rate-Prediction-Using-Decision-Tree-vs-Random-Forest-IYKRA-Homework-
+# Churn-Rate-Prediction-Using-Decision-Tree-vs-Random-Forest-IYKRA-Homework
 This is my homework for my Offline Training at IYKRA, Jakarta, Indonesia.
 
 Churn Rate Prediction is a Classification Machine Learning Problem and I am Using Decision Tree and Random Forest technique. The main goal is to predict wether the current employee in one period of time will churn / resign or not. The label is churn vs no churn with the data points representing the employee and their features / characteristic in the company. This ML may be done per month or per quarter or per semester or per year to evaluate the company churn rate and create policy to reduce the churn rate.
